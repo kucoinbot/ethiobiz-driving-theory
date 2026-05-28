@@ -713,16 +713,12 @@ function doRegister(){
   const name=document.getElementById('regName').value.trim();
   const email=document.getElementById('regEmail').value.trim().toLowerCase();
   const pass=document.getElementById('regPassword').value;
-  const code=document.getElementById('regCode').value.trim().toUpperCase();
   const err=document.getElementById('regError');
   if(!name){err.textContent='Please enter your name.';err.classList.add('show');return}
   if(!email||!email.includes('@')){err.textContent='Please enter a valid email.';err.classList.add('show');return}
   if(pass.length<6){err.textContent='Password must be at least 6 characters.';err.classList.add('show');return}
-  if(!code){err.textContent='Please enter your access code.';err.classList.add('show');return}
-  if(localStorage.getItem('eb_code_'+code)!=='paid'){err.textContent='Invalid or already used access code. Check your PayPal email.';err.classList.add('show');return}
   if(loadUser(email)){err.textContent='Email already registered. Please sign in.';err.classList.add('show');return}
-  localStorage.setItem('eb_code_'+code,'used:'+email);
-  currentUser={name,email,password:hp(pass),lang:null,stats:defStats(),code};
+  currentUser={name,email,password:hp(pass),lang:null,stats:defStats()};
   saveUser();closeModal('authModal');
   document.getElementById('langModal').classList.remove('hidden');
 }
